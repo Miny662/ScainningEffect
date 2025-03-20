@@ -10,19 +10,22 @@ import gsap from 'gsap';
 import {
   abs,
   blendScreen,
+  float,
+  mod,
+  mx_cell_noise_float,
   oneMinus,
   smoothstep,
-  sub,
   texture,
   uniform,
   uv,
+  vec2,
   vec3,
 } from 'three/tsl';
 
 import * as THREE from 'three/webgpu';
 import { useGSAP } from '@gsap/react';
+import { GlobalContext, ContextProvider } from '@/context';
 import { PostProcessing } from '@/components/post-processing';
-import { ContextProvider, GlobalContext } from '@/context';
 
 const tomorrow = Tomorrow({
   weight: '600',
@@ -35,13 +38,10 @@ const HEIGHT = 900;
 const Scene = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
-  const [rawMap, depthMap, edgeMap] = useTexture(
-    ['/raw-2.png', '/depth-2.png', '/edge-2.png'],
-    () => {
-      setIsLoading(true);
-      rawMap.colorSpace = THREE.SRGBColorSpace;
-    }
-  );
+  const [rawMap, depthMap] = useTexture(['/raw-1.png', '/depth-1.png'], () => {
+    setIsLoading(true);
+    rawMap.colorSpace = THREE.SRGBColorSpace;
+  });
 
   const { material, uniforms } = useMemo(() => {
     const uPointer = uniform(new THREE.Vector2(0));
@@ -50,18 +50,31 @@ const Scene = () => {
     const strength = 0.01;
 
     const tDepthMap = texture(depthMap);
-    const tEdgeMap = texture(edgeMap);
 
     const tMap = texture(
       rawMap,
       uv().add(tDepthMap.r.mul(uPointer).mul(strength))
-    ).mul(0.5);
+    );
+
+    const resolution = vec2(WIDTH, HEIGHT);
+
+    const tUv = uv().mul(resolution);
+    const spacing = float(10.0);
+    const gridPos = vec2(tUv.div(spacing));
+    const brightness = mx_cell_noise_float(gridPos);
+
+    const dotSize = float(3);
+    const grid = vec2(mod(tUv, spacing).sub(spacing.mul(0.5)));
+    const dist = float(grid.length());
+    const dot = float(smoothstep(dotSize, dotSize.sub(0.1), dist)).mul(
+      brightness
+    );
 
     const depth = tDepthMap;
 
-    const flow = sub(1, smoothstep(0, 0.02, abs(depth.sub(uProgress))));
+    const flow = oneMinus(smoothstep(0, 0.02, abs(depth.sub(uProgress))));
 
-    const mask = oneMinus(tEdgeMap).mul(flow).mul(vec3(10, 0.4, 10));
+    const mask = dot.mul(flow).mul(vec3(10, 0, 0));
 
     const final = blendScreen(tMap, mask);
 
@@ -127,7 +140,7 @@ const Html = () => {
   return (
     <div>
       <div
-        className="h-svh fixed z-90 bg-indigo-950 pointer-events-none w-full flex justify-center items-center"
+        className="h-svh  fixed z-90 bg-yellow-900 pointer-events-none w-full flex justify-center items-center"
         data-loader
       >
         <div className="w-6 h-6 bg-white animate-ping rounded-full"></div>
@@ -141,7 +154,7 @@ const Html = () => {
             }}
           >
             <div className="flex space-x-2 lg:space-x-6 overflow-hidden">
-              {'Neon Horizon'.split(' ').map((word, index) => {
+              {'Crown of Fire'.split(' ').map((word, index) => {
                 return (
                   <div data-title key={index}>
                     {word}
@@ -151,11 +164,8 @@ const Html = () => {
             </div>
           </div>
 
-          <div className=" text-center text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 overflow-hidden">
-            <div data-desc>
-              <div>A city consumed by light and shadow,</div>
-              <div>where one endless road leads to an uncertain future.</div>
-            </div>
+          <div className="text-xs md:text-xl xl:text-2xl 2xl:text-3xl mt-2 overflow-hidden">
+            <div data-desc>The Majesty and Glory of the Young King</div>
           </div>
         </div>
 
@@ -168,7 +178,7 @@ const Html = () => {
   );
 };
 
-export default function Page() {
+export default function Home() {
   return (
     <ContextProvider>
       <Html></Html>

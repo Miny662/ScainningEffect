@@ -71,7 +71,7 @@ export const Layout = () => {
               <div className="flex space-x-4">
                 {[
                   {
-                    href: '/',
+                    href: '/effect1',
                     name: 'Effect/1',
                   },
                   {

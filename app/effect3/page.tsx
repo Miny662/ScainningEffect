@@ -84,7 +84,7 @@ const Scene = () => {
     const tiling = vec2(5.0);
     const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
 
-    const dist = sdCross(tiledUv, vec2(0.9, 0.02), 0.0);
+    const dist = sdCross(tiledUv, vec2(0.3, 0.02), 0.0);
     const cross = vec3(smoothstep(0.0, 0.01, dist));
 
     const depth = oneMinus(tDepthMap);
@@ -117,7 +117,7 @@ const Scene = () => {
       duration: 3,
       ease: 'power1.out',
     });
-  }, []);
+  }, [uniforms.uProgress]);
 
   useFrame(({ pointer }) => {
     uniforms.uPointer.value = pointer;
