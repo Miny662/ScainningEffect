@@ -13,8 +13,8 @@ import {
   float,
   mod,
   mx_cell_noise_float,
+  oneMinus,
   smoothstep,
-  sub,
   texture,
   uniform,
   uv,
@@ -72,7 +72,7 @@ const Scene = () => {
 
     const depth = tDepthMap;
 
-    const flow = sub(1, smoothstep(0, 0.02, abs(depth.sub(uProgress))));
+    const flow = oneMinus(smoothstep(0, 0.02, abs(depth.sub(uProgress))));
 
     const mask = dot.mul(flow).mul(vec3(10, 0, 0));
 

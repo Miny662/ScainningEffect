@@ -11,9 +11,12 @@ import {
   abs,
   blendScreen,
   float,
+  Fn,
+  max,
   mod,
-  mx_cell_noise_float,
   oneMinus,
+  select,
+  ShaderNodeObject,
   smoothstep,
   sub,
   texture,
@@ -35,6 +38,24 @@ const tomorrow = Tomorrow({
 
 const WIDTH = 1226;
 const HEIGHT = 650;
+
+const sdCross = Fn(
+  ([p_immutable, b_immutable, r_immutable]: ShaderNodeObject<THREE.Node>[]) => {
+    const r = float(r_immutable).toVar();
+    const b = vec2(b_immutable).toVar();
+    const p = vec2(p_immutable).toVar();
+    p.assign(abs(p));
+    p.assign(select(p.y.greaterThan(p.x), p.yx, p.xy));
+    const q = vec2(p.sub(b)).toVar();
+    const k = float(max(q.y, q.x)).toVar();
+    const w = vec2(
+      select(k.greaterThan(0.0), q, vec2(b.y.sub(p.x), k.negate()))
+    ).toVar();
+    const d = float(max(w, 0.0).length()).toVar();
+
+    return select(k.greaterThan(0.0), d, d.negate()).add(r);
+  }
+);
 
 const Scene = () => {
   const { setIsLoading } = useContext(GlobalContext);
@@ -58,24 +79,19 @@ const Scene = () => {
     ).mul(0.5);
 
     const resolution = vec2(WIDTH, HEIGHT);
-
     const tUv = uv().mul(resolution);
-    const spacing = float(10.0);
-    const gridPos = vec2(tUv.div(spacing));
-    const brightness = mx_cell_noise_float(gridPos);
 
-    const dotSize = float(3);
-    const grid = vec2(mod(tUv, spacing).sub(spacing.mul(0.5)));
-    const dist = float(grid.length());
-    const dot = float(smoothstep(dotSize, dotSize.sub(0.1), dist)).mul(
-      brightness
-    );
+    const tiling = vec2(5.0);
+    const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
+
+    const dist = sdCross(tiledUv, vec2(0.9, 0.02), 0.0);
+    const cross = vec3(smoothstep(0.0, 0.01, dist));
 
     const depth = oneMinus(tDepthMap);
 
     const flow = sub(1, smoothstep(0, 0.02, abs(depth.sub(uProgress))));
 
-    const mask = dot.mul(flow).mul(vec3(10, 10, 10));
+    const mask = oneMinus(cross).mul(flow).mul(vec3(10, 10, 10));
 
     const final = blendScreen(tMap, mask);
 
