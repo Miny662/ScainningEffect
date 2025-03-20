@@ -106,7 +106,7 @@ const Scene = () => {
         uProgress,
       },
     };
-  }, []);
+  }, [rawMap, depthMap]);
 
   const [w, h] = useAspect(WIDTH, HEIGHT);
 

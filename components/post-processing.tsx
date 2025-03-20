@@ -25,7 +25,7 @@ export const PostProcessing = ({
     postProcessing.outputNode = final;
 
     return postProcessing;
-  }, [camera, gl, scene]);
+  }, [camera, gl, scene, strength, threshold]);
 
   useFrame(() => {
     render.renderAsync();
