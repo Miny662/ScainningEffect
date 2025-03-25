@@ -13,7 +13,7 @@ export type ContextType = {
 export const GlobalContext = createContext({} as ContextType);
 
 export const ContextProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <GlobalContext.Provider value={{ isLoading, setIsLoading }}>

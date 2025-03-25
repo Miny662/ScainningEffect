@@ -38,7 +38,7 @@ const Scene = () => {
   const [rawMap, depthMap, edgeMap] = useTexture(
     ['/raw-2.png', '/depth-2.png', '/edge-2.png'],
     () => {
-      setIsLoading(true);
+      setIsLoading(false);
       rawMap.colorSpace = THREE.SRGBColorSpace;
     }
   );
@@ -104,7 +104,7 @@ const Html = () => {
   const { isLoading } = useContext(GlobalContext);
 
   useGSAP(() => {
-    if (isLoading) {
+    if (!isLoading) {
       gsap
         .timeline()
         .to('[data-loader]', {
