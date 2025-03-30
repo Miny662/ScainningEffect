@@ -4,6 +4,10 @@ A WebGPU-powered visual experiment that explores a scanning effect using a depth
 
 ![Image Title](https://tympanus.net/codrops/wp-content/uploads/2025/03/scaneffect_featured.jpg)
 
+<video width="100%" autoplay="autoplay" controls="false">
+    <source src="preview.mp4" type="video/webm">
+</video>
+
 [Article on Codrops](https://tympanus.net/codrops/?p=90674)
 
 [Demo](https://tympanus.net/Development/ScanEffect/)
@@ -21,5 +25,5 @@ bun dev
 ```
 
 ## License
-[MIT](LICENSE)
 
+[MIT](LICENSE)
