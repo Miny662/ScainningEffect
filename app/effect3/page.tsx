@@ -78,14 +78,14 @@ const Scene = () => {
       uv().add(tDepthMap.r.mul(uPointer).mul(strength))
     ).mul(0.5);
 
-    const resolution = vec2(WIDTH, HEIGHT);
-    const tUv = uv().mul(resolution);
+    const aspect = float(WIDTH).div(HEIGHT);
+    const tUv = vec2(uv().x.mul(aspect), uv().y);
 
-    const tiling = vec2(5.0);
+    const tiling = vec2(50.0);
     const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
 
     const dist = sdCross(tiledUv, vec2(0.3, 0.02), 0.0);
-    const cross = vec3(smoothstep(0.0, 0.01, dist));
+    const cross = vec3(smoothstep(0.0, 0.02, dist));
 
     const depth = oneMinus(tDepthMap);
 
@@ -189,7 +189,7 @@ const Html = () => {
         </div>
 
         <WebGPUCanvas>
-          <PostProcessing strength={0.2}></PostProcessing>
+          <PostProcessing strength={0.3}></PostProcessing>
           <Scene></Scene>
         </WebGPUCanvas>
       </div>
