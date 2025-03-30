@@ -63,7 +63,7 @@ export const Layout = () => {
               ( All demos )
             </Link>
 
-            <Link href="#" className="md:text-center">
+            <Link href="https://tympanus.net/codrops/?p=90674" className="md:text-center">
               ( Article )
             </Link>
 
@@ -99,15 +99,12 @@ export const Layout = () => {
         </div>
 
         <div
-          className="text-xs w-full sm:w-96 opacity-65"
+          className="text-xs w-full sm:w-96 opacity-65 frame"
           style={{
             gridRow: '6/7',
             gridColumn: '1/8',
           }}
         >
-          <Link target="_blank" href={'#'}>
-            AD
-          </Link>
         </div>
 
         <div
@@ -117,10 +114,10 @@ export const Layout = () => {
             gridColumn: '1/4',
           }}
         >
-          <Link href={'#'} target="_blank">
+          <Link href={'https://github.com/d3adrabbit/ScanningEffectWithDepthMap'} target="_blank">
             Github
           </Link>
-          <Link href={'#'}>Previous demo</Link>
+
           <div className="space-x-2">
             {tags.map((item, index) => {
               return (
@@ -139,8 +136,8 @@ export const Layout = () => {
             gridColumn: '7/8',
           }}
         >
-          <Link href={'https://tympanus.net/codrops/'} target="_blank">
-            © Codrops
+          <Link href={'https://x.com/deadrabbbbit'} target="_blank">
+            Made by deadrabbbbit
           </Link>
         </div>
       </div>
