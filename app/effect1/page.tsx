@@ -56,19 +56,16 @@ const Scene = () => {
       uv().add(tDepthMap.r.mul(uPointer).mul(strength))
     );
 
-    const resolution = vec2(WIDTH, HEIGHT);
+    const aspect = float(WIDTH).div(HEIGHT);
+    const tUv = vec2(uv().x.mul(aspect), uv().y);
 
-    const tUv = uv().mul(resolution);
-    const spacing = float(10.0);
-    const gridPos = vec2(tUv.div(spacing));
-    const brightness = mx_cell_noise_float(gridPos);
+    const tiling = vec2(120.0);
+    const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
 
-    const dotSize = float(3);
-    const grid = vec2(mod(tUv, spacing).sub(spacing.mul(0.5)));
-    const dist = float(grid.length());
-    const dot = float(smoothstep(dotSize, dotSize.sub(0.1), dist)).mul(
-      brightness
-    );
+    const brightness = mx_cell_noise_float(tUv.mul(tiling).div(2));
+
+    const dist = float(tiledUv.length());
+    const dot = float(smoothstep(0.5, 0.49, dist)).mul(brightness);
 
     const depth = tDepthMap;
 
