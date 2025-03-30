@@ -24,6 +24,10 @@ import { useGSAP } from '@gsap/react';
 import { PostProcessing } from '@/components/post-processing';
 import { ContextProvider, GlobalContext } from '@/context';
 
+import TEXTUREMAP from '@/assets/raw-2.png';
+import DEPTHMAP from '@/assets/depth-2.png';
+import EDGEMAP from '@/assets/edge-2.png';
+
 const tomorrow = Tomorrow({
   weight: '600',
   subsets: ['latin'],
@@ -36,7 +40,7 @@ const Scene = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
   const [rawMap, depthMap, edgeMap] = useTexture(
-    ['/raw-2.png', '/depth-2.png', '/edge-2.png'],
+    [TEXTUREMAP.src, DEPTHMAP.src, EDGEMAP.src],
     () => {
       setIsLoading(false);
       rawMap.colorSpace = THREE.SRGBColorSpace;

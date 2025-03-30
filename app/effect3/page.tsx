@@ -31,6 +31,9 @@ import { useGSAP } from '@gsap/react';
 import { PostProcessing } from '@/components/post-processing';
 import { ContextProvider, GlobalContext } from '@/context';
 
+import TEXTUREMAP from '@/assets/raw-3.jpg';
+import DEPTHMAP from '@/assets/depth-3.png';
+
 const tomorrow = Tomorrow({
   weight: '600',
   subsets: ['latin'],
@@ -60,7 +63,7 @@ const sdCross = Fn(
 const Scene = () => {
   const { setIsLoading } = useContext(GlobalContext);
 
-  const [rawMap, depthMap] = useTexture(['/raw-3.jpg', '/depth-3.png'], () => {
+  const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src], () => {
     setIsLoading(false);
     rawMap.colorSpace = THREE.SRGBColorSpace;
   });
