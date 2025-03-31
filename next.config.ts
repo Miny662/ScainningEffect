@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   output: 'export',
   // basePath: '/Development/ScanEffect',
   // distDir: 'Development/ScanEffect',
+  trailingSlash: true,
 };
 
 export default nextConfig;

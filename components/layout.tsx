@@ -63,7 +63,10 @@ export const Layout = () => {
               ( All demos )
             </Link>
 
-            <Link href="https://tympanus.net/codrops/?p=90674" className="md:text-center">
+            <Link
+              href="https://tympanus.net/codrops/?p=90674"
+              className="md:text-center"
+            >
               ( Article )
             </Link>
 
@@ -71,15 +74,15 @@ export const Layout = () => {
               <div className="flex space-x-4">
                 {[
                   {
-                    href: '/effect1',
+                    href: '/effect1/',
                     name: 'Effect/1',
                   },
                   {
-                    href: '/effect2',
+                    href: '/effect2/',
                     name: 'Effect/2',
                   },
                   {
-                    href: '/effect3',
+                    href: '/effect3/',
                     name: 'Effect/3',
                   },
                 ].map((item, index) => {
@@ -104,8 +107,7 @@ export const Layout = () => {
             gridRow: '6/7',
             gridColumn: '1/8',
           }}
-        >
-        </div>
+        ></div>
 
         <div
           className="flex flex-col"
@@ -114,7 +116,10 @@ export const Layout = () => {
             gridColumn: '1/4',
           }}
         >
-          <Link href={'https://github.com/d3adrabbit/ScanningEffectWithDepthMap'} target="_blank">
+          <Link
+            href={'https://github.com/d3adrabbit/ScanningEffectWithDepthMap'}
+            target="_blank"
+          >
             Github
           </Link>
 
