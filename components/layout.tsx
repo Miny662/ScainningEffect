@@ -4,21 +4,6 @@ import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
-const tags = [
-  {
-    name: '#WebGPU',
-    href: 'https://tympanus.net/codrops/demos/?tag=webgpu',
-  },
-  {
-    name: '#Three.js',
-    href: 'https://tympanus.net/codrops/demos/?tag=three-js',
-  },
-  {
-    name: '#TSL',
-    href: 'https://tympanus.net/codrops/demos/?tag=tsl',
-  },
-];
-
 const Link = ({
   href,
   target,
@@ -58,17 +43,7 @@ export const Layout = () => {
             gridColumn: '1/8',
           }}
         >
-          <div className="flex items-center space-y-2 flex-col md:grid grid-cols-3">
-            <Link target="_blank" href={'https://tympanus.net/codrops/demos/'}>
-              ( All demos )
-            </Link>
-
-            <Link
-              href="https://tympanus.net/codrops/?p=90674"
-              className="md:text-center"
-            >
-              ( Article )
-            </Link>
+          <div className="flex items-center space-y-2">
 
             <div className="md:justify-items-end">
               <div className="flex space-x-4">
@@ -110,40 +85,13 @@ export const Layout = () => {
         ></div>
 
         <div
-          className="flex flex-col"
-          style={{
-            gridRow: '7/8',
-            gridColumn: '1/4',
-          }}
-        >
-          <Link
-            href={'https://github.com/d3adrabbit/ScanningEffectWithDepthMap'}
-            target="_blank"
-          >
-            Github
-          </Link>
-
-          <div className="space-x-2">
-            {tags.map((item, index) => {
-              return (
-                <Link href={item.href} target="_blank" key={index}>
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        <div
           className="flex flex-col justify-end"
           style={{
             gridRow: '7/8',
             gridColumn: '7/8',
           }}
         >
-          <Link href={'https://x.com/deadrabbbbit'} target="_blank">
-            Made by deadrabbbbit
-          </Link>
+            Made by Karen Avetisian
         </div>
       </div>
     </div>

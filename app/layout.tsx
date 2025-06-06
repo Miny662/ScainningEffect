@@ -4,7 +4,7 @@ import './globals.css';
 import { Layout } from '@/components/layout';
 
 export const metadata: Metadata = {
-  title: 'Scanning effect with depth map | Codrops',
+  title: 'Scanning effect',
   description: 'Scanning effect with depth map',
 };
 
